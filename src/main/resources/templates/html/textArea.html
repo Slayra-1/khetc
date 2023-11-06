@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Area Test</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <form action="/html/textArea" method="post">
+        <div class="mb-3">
+            <label for="textAreaValue" class="form-label">텍스트 입력</label>
+            <textarea class="form-control" id="textAreaValue" rows="3" name="textAreaValue"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <br/>
+    <br/>
+
+    <div class="mb-3">
+        <label class="form-label">서버 값</label>
+        <div th:each="value : ${serverValue}" style="background-color:lightgray;">
+            <p th:text="${value}"></p>
+        </div>
+        <div th:if="${serverValue == null or #lists.size(serverValue) == 0}" style="background-color:lightgray;">
+            <p>아직 입력된 값이 없습니다.</p>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+</script>
+</html>

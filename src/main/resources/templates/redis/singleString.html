@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Redis Test</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="mb-3">
+        <label for="str" class="form-label">레디스 텍스트 : </label>
+        <input type="text" class="form-control" id="str" th:value="${singleString}">
+    </div>
+    <button type="submit" class="btn btn-primary" id="singleSaveBtn">저장</button>
+
+    <br/>
+    <br/>
+
+    <div class="mb-3">
+        <label for="str2" class="form-label">휘발성 레디스 텍스트 : </label>
+        <input type="text" class="form-control" id="str2" th:value="${expireString}">
+        <input type="text" class="form-control" id="timeout" placeholder="timeout second">
+    </div>
+    <button type="submit" class="btn btn-primary" id="expireSaveBtn">저장</button>
+</div>
+</body>
+
+<script>
+    $(function(){
+        $("#singleSaveBtn").click(function(){
+            var strValue = $("#str").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/redis/singleString",
+                data: { str: strValue },
+                dataType: "json",
+                success: function(res) {
+                    if(res.result == "true") {
+                        alert("저장 성공");
+                    }else{
+                        alert("저장 실패");
+                    }
+                },
+                error: function(error) {
+                    alert("error");
+                }
+            });
+        })
+
+        $("#expireSaveBtn").click(function(){
+            var strValue = $("#str2").val();
+            var timeout = $("#timeout").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/redis/singleStringWithTimeout",
+                data: {
+                    str: strValue,
+                    timeout: timeout
+                },
+                dataType: "json",
+                success: function(res) {
+                    if(res.result == "true") {
+                        alert("저장 성공");
+                    }else{
+                        alert("저장 실패");
+                    }
+                },
+                error: function(error) {
+                    alert("error");
+                }
+            });
+        })
+    })
+</script>
+</html>
